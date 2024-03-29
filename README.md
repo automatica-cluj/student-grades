@@ -1,7 +1,7 @@
 # Student grades
 
 How to use it:
-1. Replace the value of STUDENT_EMAIL with your email address you used when filled registration form received at beginning of the lab.
+1. Replace the value of STUDENT_EMAIL in StudentGradesManager with your email address you used when filled registration form received at beginning of the first lab.
 2. Run the application.
 
 Note: The application will display the grades for the student with the email address you provided.
