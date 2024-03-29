@@ -1,7 +1,16 @@
 # Student grades
 
 How to use it:
-1. Replace the value of STUDENT_EMAIL in the StudentGrades.java file with your email address used to register in class registration form.
-2. Find your student code by running SudentCodeGenerator.java file.
-2. Use obtained code from prievous exercise and replace STUDENT_CODE in StudentGradesManager.java file with the code obtained in the previous step.
-3. Run the StudentGradesManager.java file to see your grades.
+1. Replace the value of STUDENT_EMAIL with your email address you used when filled registration form received at beginning of the lab.
+2. Run the application.
+
+Note: The application will display the grades for the student with the email address you provided.
+
+Outpu:
+```
+Getting grade for student: 900e0265abcc9c0833823a46b602d2aa
+StudentGrade[code=900e0265abcc9c0833823a46b602d2aa, grade=10.0]
+```  
+
+Note: If grade is not displayed, please check the email address you provided or check with the instructor if you correctly filled the registration form.
+

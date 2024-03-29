@@ -1,14 +1,22 @@
 package aut.utcluj.studentgrades;
 
 import java.io.*;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class StudentGradesManager {
     private static final String SERIALIZED_FILE_PATH = "studentGrades_lab_test1_v1.ser";
-    private static final String STUDENT_CODE = "900e0265abcc9c0833823a46b602d2aa";
-    // Method to read the CSV and serialize the data
-    public void generateGrades(String csvFilePath) throws IOException {
+    public final static String STUDENT_EMAIL = "demo.student@test.com";
+
+    /**
+     * Method to read the CSV and serialize the data
+     * @param csvFilePath
+     * @throws IOException
+     */
+    public void saveGrades(String csvFilePath) throws IOException {
         Map<String, Double> studentGrades = new HashMap<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(csvFilePath))) {
             String line;
@@ -17,7 +25,7 @@ public class StudentGradesManager {
                 if (parts.length == 2) {
                     String studentCode = parts[0].trim();
                     Double grade = Double.parseDouble(parts[1].trim());
-                    studentGrades.put(StudentCodeGeneratorUtil.getStudentCode(studentCode), grade);
+                    studentGrades.put(getStudentCode(studentCode), grade);
                 }
             }
         }
@@ -27,8 +35,15 @@ public class StudentGradesManager {
         }
     }
 
-    // Method to deserialize and get grade by student code
+    /**
+     * Method to deserialize and get grade by student code
+     * @param studentCode
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public StudentGrade getGradeByStudentCode(String studentCode) throws IOException, ClassNotFoundException {
+        System.out.println("Getting grade for student: " + studentCode);
         Map<String, Double> studentGrades;
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(SERIALIZED_FILE_PATH))) {
             studentGrades = (Map<String, Double>) in.readObject();
@@ -37,12 +52,41 @@ public class StudentGradesManager {
         return new StudentGrade(studentCode, studentGrades.get(studentCode));
     }
 
+    /**
+     * Method to generate student code
+     * @param input
+     * @return
+     */
+    public String getStudentCode(String input) {
+        try {
+            input = input.trim().toLowerCase();
+            // Static getInstance method is called with hashing MD5
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            // digest() method is called to calculate message digest
+            //  of an input digest() return array of byte
+            byte[] messageDigest = md.digest(input.getBytes());
+            // Convert byte array into signum representation
+            BigInteger no = new BigInteger(1, messageDigest);
+            // Convert message digest into hex value
+            String hashtext = no.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        }
+
+        // For specifying wrong message digest algorithms
+        catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     // Main method to test the functionality
     public static void main(String[] args) {
         try {
             StudentGradesManager sgm = new StudentGradesManager();
             //Retrieve and print a grade by student code
-            StudentGrade grade = sgm.getGradeByStudentCode(STUDENT_CODE);
+            StudentGrade grade = sgm.getGradeByStudentCode(sgm.getStudentCode(STUDENT_EMAIL));
             if (grade.grade() != null) {
                 System.out.println(grade);
             } else {
