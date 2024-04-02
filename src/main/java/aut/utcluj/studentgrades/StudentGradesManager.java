@@ -21,7 +21,7 @@ public class StudentGradesManager {
         try (BufferedReader reader = new BufferedReader(new FileReader(csvFilePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("\t");
+                String[] parts = line.split("\\s+");
                 if (parts.length == 2) {
                     String studentCode = parts[0].trim();
                     Double grade = Double.parseDouble(parts[1].trim());
