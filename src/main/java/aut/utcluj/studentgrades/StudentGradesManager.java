@@ -85,7 +85,7 @@ public class StudentGradesManager {
     public static void main(String[] args) {
         try {
             StudentGradesManager sgm = new StudentGradesManager();
-            //sgm.saveGrades("demo_note.txt");
+            sgm.saveGrades("demo_note.txt");
             //Retrieve and print a grade by student code
             StudentGrade grade = sgm.getGradeByStudentCode(sgm.getStudentCode(STUDENT_EMAIL));
             if (grade.grade() != null) {
