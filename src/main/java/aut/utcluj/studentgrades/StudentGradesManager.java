@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StudentGradesManager {
-    private static final String SERIALIZED_FILE_PATH = "studentGrades_lab_test1_v1.ser";
+    private static final String SERIALIZED_FILE_PATH = "studentGrades_lab_test2_v1.ser";
     public final static String STUDENT_EMAIL = "demo.student@test.com";
 
     /**
@@ -85,7 +85,7 @@ public class StudentGradesManager {
     public static void main(String[] args) {
         try {
             StudentGradesManager sgm = new StudentGradesManager();
-            //sgm.saveGrades("demo_note.txt");
+            //sgm.saveGrades("demo_note2.txt");
             //Retrieve and print a grade by student code
             StudentGrade grade = sgm.getGradeByStudentCode(sgm.getStudentCode(STUDENT_EMAIL));
             if (grade.grade() != null) {
